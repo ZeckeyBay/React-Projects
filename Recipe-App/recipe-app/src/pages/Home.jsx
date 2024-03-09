@@ -32,7 +32,7 @@ const Home = () => {
 
     return (
         <div className="container mx-auto">
-            <h1 className="text-3xl font-bold text-center my-8">Recipe Search App</h1>
+            <h1 className="text-3xl font-bold text-center my-8 dark:text-white">Recipe Search App</h1>
             <SearchBar setQuery={setQuery} />
             <div className="flex justify-center">
                 {mealTypes.map((mealType, index) => (

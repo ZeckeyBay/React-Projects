@@ -4,12 +4,12 @@ import { Outlet } from 'react-router-dom';
 
 const LayoutComponent = () => {
     return (
-        <div>
+        <main className="h-screen">
             <Navbar />
-            <main>
+            <section className="h-full dark:bg-black">
                 <Outlet />
-            </main>
-        </div>
+            </section>
+        </main>
     );
 };
 
