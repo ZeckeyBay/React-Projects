@@ -1,46 +1,49 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MdOutlineLightMode } from 'react-icons/md';
-import { MdDarkMode } from 'react-icons/md';
+import { MdOutlineLightMode, MdDarkMode } from 'react-icons/md';
 
 const Navbar = () => {
-    const [darkMode, setDarkMode] = useState(false);
-    const toggleDarkMode = () => {
-        setDarkMode(prev => !prev);
+    const [isDarkMode, setIsDarkMode] = useState(false);
+
+    const toggleTheme = () => {
+        setIsDarkMode(prevMode => !prevMode);
     };
 
     return (
-        // <div className={`${darkMode && 'dark'}`}>
-        <div className={`${darkMode ? 'dark' : 'light'}`}>
-            <div className="dark:bg-neutral-900">
-                <div className="flex justify-between p-5 list-none text-black dark:text-white">
-                    <li className="ml-5 border-2 rounded-full pt-4 px-1 bg-blue-500 text-black font-semibold hover:bg-blue-600 border-blue dark:border-white dark:text-white">
-                        <Link to="/">Recipes</Link>
-                    </li>
-                    <div className="flex">
-                        <li className="mx-5 border-2 rounded-full pt-4 px-2.5 border-blue bg-blue-500 text-black font-semibold  hover:bg-blue-600 dark:border-white dark:text-white">
-                            {' '}
-                            <Link to="/about">About</Link>
-                        </li>
-                        <li className="mx-5 border-2 rounded-full pt-4 px-2 border-blue bg-blue-500 text-black font-semibold hover:bg-blue-600 dark:border-white dark:text-white">
-                            <a href="https://github.com/ZeckeyBay" target="_blank">
+        <nav className={`bg-${isDarkMode ? 'neutral-900' : 'white'} shadow-lg`}>
+            <div className="container mx-auto px-4 py-3">
+                <div className="flex justify-between items-center">
+                    <Link to="/" className={`text-lg font-semibold text-${isDarkMode ? 'white' : 'gray-800'} hover:text-blue-600 dark:text-white`}>
+                        Recipes
+                    </Link>
+
+                    <div className="flex items-center">
+                        <Link to="/about" className={`text-lg pr-10 font-semibold text-${isDarkMode ? 'white' : 'gray-800'} hover:text-blue-600 dark:text-white`}>
+                            About
+                        </Link>
+
+                        <div className={`text-lg pr-10 font-semibold text-${isDarkMode ? 'white' : 'gray-800'} hover:text-blue-600 dark:text-white`}>
+                            <a href="https://github.com/ZeckeyBay" target="_blank" rel="noopener noreferrer">
                                 Github
                             </a>
-                        </li>
+                        </div>
 
-                        <li className="mx-5 border-2 rounded-full pt-4 px-1 border-blue bg-blue-500 text-black font-semibold hover:bg-blue-600 dark:border-white dark:text-white">
-                            {' '}
-                            <Link to="/contact">Contact</Link>
-                        </li>
-                        <MdOutlineLightMode />
-                        <MdDarkMode />
-                        <button className="mr-10 ml-5 w-16 h-16 bg-neutral-900 text-white dark:bg-white rounded-full  dark:text-black font-semibold" onClick={toggleDarkMode}>
-                            {darkMode ? 'Light Theme' : 'Dark Theme'}
+                        <Link to="/contact" className={`text-lg pr-10 font-semibold text-${isDarkMode ? 'white' : 'gray-800'} hover:text-blue-600 dark:text-white`}>
+                            Contact
+                        </Link>
+
+                        <MdOutlineLightMode className={`text-xl cursor-pointer ${isDarkMode ? 'text-gray-400' : 'text-gray-800'}`} onClick={() => setIsDarkMode(false)} />
+                        <button className="w-12 h-6 relative rounded-full bg-blue-500 focus:outline-none" onClick={toggleTheme}>
+                            <div
+                                className={`w-6 h-6 absolute top-0 transition-transform duration-300 ease-in-out ${isDarkMode ? 'transform translate-x-full' : ''}`}
+                                style={{ backgroundColor: '#fff', borderRadius: '50%' }}
+                            />
                         </button>
+                        <MdDarkMode className={`text-xl cursor-pointer ${isDarkMode ? 'text-gray-800' : 'text-gray-400'}`} onClick={() => setIsDarkMode(true)} />
                     </div>
                 </div>
             </div>
-        </div>
+        </nav>
     );
 };
 
