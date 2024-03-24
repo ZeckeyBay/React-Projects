@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Checkbox from "./Checkbox";
 import { FaTrash } from "react-icons/fa";
 import { MdEditSquare } from "react-icons/md";
 
 const Task = ({ id, name, done, onToggle, onDelete, onRename }) => {
   const [editedName, setEditedName] = useState(name);
-  const [editing, setEditing] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem(`taskName-${id}`, JSON.stringify(editedName));
+  }, [id, editedName]);
 
   const handleToggle = () => {
     onToggle(id);
@@ -22,7 +25,6 @@ const Task = ({ id, name, done, onToggle, onDelete, onRename }) => {
   const handleSubmit = () => {
     console.log("Submitting edited name:", editedName);
     onRename(id, editedName);
-    setEditing(false); // Exit editing mode after submission
   };
 
   const handleKeyPress = (e) => {
@@ -32,31 +34,22 @@ const Task = ({ id, name, done, onToggle, onDelete, onRename }) => {
     }
   };
 
-  const handleEditClick = () => {
-    setEditing(true); // Activate editing mode
-  };
-
   return (
-    <div className="flex items-center mx-2 my-3 p-2 bg-slate-700 rounded-lg">
+    <div
+      className={`flex items-center mx-2 my-3 p-2 rounded-lg ${
+        done ? "bg-gray-800 line-through" : "bg-slate-700"
+      }`}
+    >
       <Checkbox taskId={id} defaultChecked={done} onChange={handleToggle} />
-      {editing ? (
-        <input
-          type="text"
-          value={editedName}
-          onChange={handleInputChange}
-          onBlur={handleSubmit}
-          onKeyPress={handleKeyPress}
-          className="bg-transparent focus:outline-none text-lg flex-grow"
-        />
-      ) : (
-        <span className="text-lg flex-grow" onClick={handleEditClick}>
-          {name}
-        </span>
-      )}
-      <MdEditSquare
-        onClick={handleEditClick}
-        className="text-cyan-400 text-xl mt-0.5 mr-1 cursor-pointer"
+      <input
+        type="text"
+        value={editedName}
+        onChange={handleInputChange}
+        onBlur={handleSubmit}
+        onKeyPress={handleKeyPress}
+        className="bg-transparent focus:outline-none text-lg flex-grow"
       />
+      <MdEditSquare className="mr-1.5 text-cyan-400 text-xl mt-0.5 cursor-pointer" />
       <FaTrash
         onClick={handleDelete}
         className="ml-auto mr-1 text-slate-400 cursor-pointer"
