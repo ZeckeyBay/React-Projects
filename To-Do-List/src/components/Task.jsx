@@ -5,10 +5,11 @@ import { MdEditSquare } from "react-icons/md";
 
 const Task = ({ id, name, done, onToggle, onDelete, onRename }) => {
   const [editedName, setEditedName] = useState(name);
+  const [editing, setEditing] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem(`taskName-${id}`, JSON.stringify(editedName));
-  }, [id, editedName]);
+    setEditedName(name);
+  }, [name]);
 
   const handleToggle = () => {
     onToggle(id);
@@ -23,8 +24,22 @@ const Task = ({ id, name, done, onToggle, onDelete, onRename }) => {
   };
 
   const handleSubmit = () => {
-    console.log("Submitting edited name:", editedName);
     onRename(id, editedName);
+    setEditing(false);
+
+    const existingTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    const updatedTasks = existingTasks.map((task) => {
+      if (task.id === id) {
+        return { ...task, name: editedName };
+      }
+      return task;
+    });
+
+    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+  };
+  const handleEditClick = () => {
+    setEditing(true);
   };
 
   const handleKeyPress = (e) => {
@@ -41,15 +56,23 @@ const Task = ({ id, name, done, onToggle, onDelete, onRename }) => {
       }`}
     >
       <Checkbox taskId={id} defaultChecked={done} onChange={handleToggle} />
-      <input
-        type="text"
-        value={editedName}
-        onChange={handleInputChange}
-        onBlur={handleSubmit}
-        onKeyPress={handleKeyPress}
-        className="bg-transparent focus:outline-none text-lg flex-grow"
+      {editing ? (
+        <input
+          type="text"
+          value={editedName}
+          onChange={handleInputChange}
+          onBlur={handleSubmit}
+          onKeyPress={handleKeyPress}
+          className="bg-transparent focus:outline-none text-lg flex-grow"
+          autoFocus
+        />
+      ) : (
+        <div className="flex-grow">{name}</div>
+      )}
+      <MdEditSquare
+        onClick={handleEditClick}
+        className="mr-1.5 text-cyan-400 text-xl mt-0.5 cursor-pointer"
       />
-      <MdEditSquare className="mr-1.5 text-cyan-400 text-xl mt-0.5 cursor-pointer" />
       <FaTrash
         onClick={handleDelete}
         className="ml-auto mr-1 text-slate-400 cursor-pointer"
