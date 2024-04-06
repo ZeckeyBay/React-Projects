@@ -24,6 +24,7 @@ const Form = ({ onAdd }) => {
         type="text"
         placeholder="Add a new task..."
         value={taskName}
+        maxLength={100} // Max character limit
         onChange={(event) => setTaskName(event.target.value)}
       />
     </form>

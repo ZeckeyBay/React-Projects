@@ -1,3 +1,4 @@
+// App.js
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import Form from "./components/Form";
@@ -43,7 +44,7 @@ function App() {
 
   const getMessage = () => {
     const percentage = (numberCompleted / numberTotal) * 100;
-    if (percentage == 0) {
+    if (percentage === 0) {
       return "Try to do at least one :(";
     }
     if (percentage === 100) {
@@ -61,7 +62,7 @@ function App() {
   };
 
   return (
-    <main className="max-w-[330px] m-auto">
+    <main className="max-w-[350px] m-auto">
       <h1 className="flex items-center justify-center my-5 text-3xl">
         {numberCompleted}/{numberTotal} Complete
       </h1>
@@ -69,7 +70,7 @@ function App() {
         {getMessage()}
       </h2>
       <Form onAdd={addTask} />
-      {tasks.map((task, index) => (
+      {tasks.map((task) => (
         <Task
           key={task.id}
           id={task.id}
