@@ -4,10 +4,10 @@ import SearchBar from './SearchBar';
 import Card from './Card';
 
 const API_KEY = 'f7f64dc1126b0ea411322984791b644b';
-const FEATURED_API_MOVIES = 'https://api.themoviedb.org/3/discover/movie?api_key=f7f64dc1126b0ea411322984791b644b';
-const FEATURED_API_SERIES = 'https://api.themoviedb.org/3/discover/tv?api_key=f7f64dc1126b0ea411322984791b644b';
-const SEARCH_API_MOVIES = 'https://api.themoviedb.org/3/search/movie?api_key=f7f64dc1126b0ea411322984791b644b&query=';
-const SEARCH_API_SERIES = 'https://api.themoviedb.org/3/search/tv?api_key=f7f64dc1126b0ea411322984791b644b&query=';
+const FEATURED_API_MOVIES = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}`;
+const FEATURED_API_SERIES = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}`;
+const SEARCH_API_MOVIES = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=`;
+const SEARCH_API_SERIES = `https://api.themoviedb.org/3/search/tv?api_key=${API_KEY}&query=`;
 
 const Home = () => {
     const [mediaType, setMediaType] = useState('movie');
@@ -83,7 +83,7 @@ const Home = () => {
     };
 
     return (
-        <div className="flex flex-col items-center h-auto w-full bg-amber-300">
+        <div className="flex flex-col items-center h-auto w-full bg-black/20">
             <SearchBar handleSubmit={handleSubmit} query={query} setQuery={setQuery} fetchMovies={fetchMovies} fetchSeries={fetchSeries} mediaType={mediaType} handleSortByVote={handleSortByVote} />
             <div className="my-24 flex flex-wrap gap-20 w-100 m-auto justify-center items-center">
                 {mediaData.length > 0 ? mediaData.map(media => <Card key={media.id} media={media} mediaType={mediaType} />) : renderNoResultsMessage()}
