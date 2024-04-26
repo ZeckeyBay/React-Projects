@@ -1,4 +1,4 @@
-Movie/Series App
+Movie/Series App made with React, Tailwind, Firebase
 
 # React + Vite
 
